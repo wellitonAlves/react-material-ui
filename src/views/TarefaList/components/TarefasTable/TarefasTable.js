@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { makeStyles } from '@material-ui/styles';
+import TimerIcon from '@material-ui/icons/Timer';
+import DoneAllIcon from '@material-ui/icons/DoneAll';
+import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import {
   Card,
   CardContent,
@@ -13,6 +16,7 @@ import {
   TableHead,
   TableRow,
   Typography,
+  IconButton
 } from '@material-ui/core';
 
 
@@ -58,11 +62,32 @@ const TarefasTable = props => {
                   <TableCell>Descrição</TableCell>
                   <TableCell>Categoria</TableCell>
                   <TableCell>Status</TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
 
               </TableHead>
               <TableBody>
-
+                {tarefas.map(tarefa => {
+                  return(
+                    <TableRow key={tarefa.id}>
+                      <TableCell>{tarefa.id}</TableCell>
+                      <TableCell>{tarefa.descricao}</TableCell>
+                      <TableCell>{tarefa.categoria}</TableCell>
+                      <TableCell>{tarefa.done ? 'Feito' : 'Pendente'}</TableCell>
+                      <TableCell>
+                        <IconButton onClick={e => props.alterarStatus(tarefa.id)} color="secondary">
+                          {tarefa.done ? <DoneAllIcon/> : <TimerIcon/>}
+                        </IconButton>
+                      </TableCell>
+                      <TableCell>
+                        <IconButton onClick={e => props.deleteAction(tarefa.id)} >
+                          <DeleteIcon/>
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
               </TableBody>
             </Table>       
           </div>
